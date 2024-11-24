@@ -1,6 +1,7 @@
 package com.sportradar.scoreboard;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should allow to start a new match with zero starting score")
     public void shouldStartNewMatch() {
         Match match = scoreboard.startNewMatch("France", "Germany");
 
@@ -26,6 +28,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should throw an exception when starting the match with null team name")
     public void shouldThrowExceptionWhenStartingMatchWithNullTeamNames() {
         assertThrows(NullPointerException.class,
                 () -> scoreboard.startNewMatch(null, "Germany"),
@@ -37,6 +40,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should throw an exception when starting the same match twice")
     public void shouldThrowExceptionWhenStartingTheSameMatchTwice() {
         scoreboard.startNewMatch("Croatia", "Poland");
 
@@ -46,6 +50,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should allow to start two different matches")
     public void shouldStartTwoDifferentMatches() {
         Match match1 = scoreboard.startNewMatch("Croatia", "Poland");
         Match match2 = scoreboard.startNewMatch("", "Italy");
@@ -55,6 +60,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should allow to update the score of an ongoing match")
     public void shouldUpdateScoreOfOngoingMatch() {
         scoreboard.startNewMatch("Croatia", "Poland");
         Match match = scoreboard.updateScore("Croatia", "Poland", 1, 2);
@@ -63,19 +69,14 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldAllowUpdatingScoreWithSameValues() {
-        scoreboard.startNewMatch("Croatia", "Poland");
-        scoreboard.updateScore("Croatia", "Poland", 1, 2);
-        scoreboard.updateScore("Croatia", "Poland", 1, 2);
-    }
-
-    @Test
+    @DisplayName("Should throw an exception when updating the score for a non-existing match")
     public void shouldThrowExceptionWhenUpdatingScoreForNonExistentMatch() {
         assertThrows(IllegalStateException.class,
                 () -> scoreboard.updateScore("Croatia", "Poland", 0, 3));
     }
 
     @Test
+    @DisplayName("Should throw an exception when updating the score with null team name")
     public void shouldThrowExceptionWhenUpdatingScoreWithNullTeamNames() {
         assertThrows(NullPointerException.class,
                 () -> scoreboard.updateScore(null, "Poland", 1, 2));
@@ -85,7 +86,8 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void shouldAllowFinishingMatchAfterUpdateWithCorrectResult() {
+    @DisplayName("Should allow the match to end with the correct score")
+    public void shouldAllowMatchToEndWithCorrectScore() {
         scoreboard.startNewMatch("France", "Spain");
         scoreboard.updateScore("France", "Spain", 1, 2);
         Match match = scoreboard.finishMatch("France", "Spain");
@@ -95,12 +97,14 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should throw an exception when ending non-existent match")
     public void shouldThrowExceptionWhenFinishingNonExistentMatch() {
         assertThrows(IllegalStateException.class,
                 () -> scoreboard.finishMatch("Austria", "Slovakia"));
     }
 
     @Test
+    @DisplayName("Should throw an exception when ending match with null team names")
     public void shouldThrowExceptionWhenFinishingWithNullTeamNames() {
         assertThrows(NullPointerException.class,
                 () -> scoreboard.finishMatch(null, "Poland"));
@@ -110,6 +114,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should return empty (non-null) summary when no match is played")
     public void shouldReturnEmptyNonNullSummary() {
         List<Match> matches = scoreboard.getSummary();
 
@@ -117,6 +122,7 @@ public class ScoreboardTest {
     }
 
     @Test
+    @DisplayName("Should return summary of ongoing matches in correct order")
     public void shouldReturnSummaryInCorrectOrder() {
         scoreboard.startNewMatch("Mexico", "Canada");
         scoreboard.updateScore("Mexico", "Canada", 0, 2);

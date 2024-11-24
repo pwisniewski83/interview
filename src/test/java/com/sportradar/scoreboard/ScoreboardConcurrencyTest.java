@@ -1,6 +1,7 @@
 package com.sportradar.scoreboard;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class ScoreboardConcurrencyTest {
     }
 
     @Test
+    @DisplayName("Perform all executions in single thread")
     public void shouldPerformAllExecutionsInSingleThread() throws InterruptedException {
         try (ExecutorService executor = Executors.newSingleThreadExecutor()) {
             doTest(executor);
@@ -37,6 +39,7 @@ public class ScoreboardConcurrencyTest {
     }
 
     @Test
+    @DisplayName("Perform all executions concurrently")
     public void shouldPerformAllExecutionsConcurrently() throws InterruptedException {
         try (ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS)) {
             doTest(executor);
@@ -82,7 +85,7 @@ public class ScoreboardConcurrencyTest {
                         LOG.debug("The match is over: {}", lastUpdate);
                     }
                 } else if (LOG.isDebugEnabled()) {
-                    LOG.debug("All updates has been completed: {}", lastUpdate);
+                    LOG.debug("All updates have been completed: {}", lastUpdate);
                 }
                 latch.countDown();
             });
