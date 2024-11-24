@@ -33,11 +33,14 @@ public class Scoreboard {
      * <p>
      * The map is implemented as a {@link LinkedHashMap} to maintain the insertion order
      * of the matches, ensuring that the order in which they were added is preserved.
-     * <p>
-     * The {@code matches} map is also used as a locking object to synchronize access to the matches during operations,
-     * ensuring that match-related operations are safely performed in a multithreaded environment.
      */
     private final Map<MatchKey, Match> matches = new LinkedHashMap<>();
+
+    /**
+     * The {@code lock} object is a locking object to synchronize access to the matches during operations,
+     * ensuring that match-related operations are safely performed in a multithreaded environment.
+     */
+    private final Object lock = new Object();
 
     /**
      * Represents a unique key used to identify a match in the scoreboard.
@@ -81,7 +84,7 @@ public class Scoreboard {
 
         MatchKey key = new MatchKey(homeTeam, awayTeam);
 
-        synchronized (matches) {
+        synchronized (lock) {
             if (matches.containsKey(key)) {
                 throw new IllegalStateException("match already exists");
             }
@@ -118,7 +121,7 @@ public class Scoreboard {
 
         MatchKey key = new MatchKey(homeTeam, awayTeam);
 
-        synchronized (matches) {
+        synchronized (lock) {
             if (!matches.containsKey(key)) {
                 throw new IllegalStateException("match does not exist");
             }
@@ -154,7 +157,7 @@ public class Scoreboard {
         MatchKey key = new MatchKey(homeTeam, awayTeam);
 
         Match match;
-        synchronized (matches) {
+        synchronized (lock) {
             match = matches.remove(key);
         }
         if (match == null) {
@@ -178,7 +181,7 @@ public class Scoreboard {
      * sorted by total score and start time
      */
     public List<Match> getSummary() {
-        synchronized (matches) {
+        synchronized (lock) {
             return matches.values()
                     .stream()
                     .sorted(MATCH_COMPARATOR)
