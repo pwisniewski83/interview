@@ -1,6 +1,7 @@
 # Scoreboard Project
 
-This project implements a scoreboard system for managing sports matches, including functionality for starting, updating, finishing matches, and retrieving summaries of ongoing games.
+This project implements a scoreboard system for managing sports matches, including functionality for starting, updating,
+finishing matches, and retrieving summaries of ongoing games.
 
 ## Features
 
@@ -19,7 +20,8 @@ This project implements a scoreboard system for managing sports matches, includi
 
 ### Scoreboard
 
-The `Scoreboard` class is the central component of the project, managing all matches. It provides the following functionality:
+The `Scoreboard` class is the central component of the project, managing all matches.
+It provides the following functionality:
 
 1. **Start a New Match**
     - You can start a new match by providing names for the home and away teams. Both team names must be non-null.
@@ -31,15 +33,18 @@ The `Scoreboard` class is the central component of the project, managing all mat
 
 3. **Finish a Match**
     - Finish the ongoing match by providing the home and away team names.
-    - The match will be removed from the scoreboard when finished, and if not found, an `IllegalStateException` will be thrown.
+    - The match will be removed from the scoreboard when finished, and if not found, an `IllegalStateException`
+      will be thrown.
 
 4. **Get Match Summary**
-    - Retrieve a summary of ongoing matches, sorted first by the sum of the scores (highest score first) and then by the match start time (later matches first).
+    - Retrieve a summary of ongoing matches, sorted first by the sum of the scores (highest score first) and then
+      by the match start time (later matches first).
     - The list may be empty if no matches are ongoing.
 
 ### Thread Safety
 
-The methods of the `Scoreboard` class are thread-safe, allowing them to be called concurrently from multiple threads. Synchronization is handled internally to ensure thread safety during match updates.
+The methods of the `Scoreboard` class are thread-safe, allowing them to be called concurrently from multiple threads.
+Synchronization is handled internally to ensure thread safety during match updates.
 
 ### Other assumptions
 
