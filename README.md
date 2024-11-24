@@ -11,7 +11,7 @@ This project implements a scoreboard system for managing sports matches, includi
 
 ## Requirements
 
-- Java 11 or higher
+- Java 23 or higher
 - SLF4J for logging
 - JUnit for testing (if running tests)
 
